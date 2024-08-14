@@ -1,6 +1,7 @@
 import "./globals.css";
 import PageHeader from "@/components/page-header";
 import ConvexClientProvider from "@/providers/convex-clerk-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function RootLayout({
 	children,
@@ -13,6 +14,7 @@ export default function RootLayout({
 				<ConvexClientProvider>
 					<PageHeader />
 					{children}
+					<Toaster richColors position="top-center" />
 				</ConvexClientProvider>
 			</body>
 		</html>
