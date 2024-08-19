@@ -86,7 +86,7 @@ export const deleteUser = internalMutation({
 export async function userQuery(ctx: QueryCtx, clerkUserId: string) {
 	return await ctx.db
 		.query("users")
-		.withIndex("by_clerkId", (q) => q.eq("clerkId", clerkUserId))
+		.withIndex("clerkId", (q) => q.eq("clerkId", clerkUserId))
 		.unique();
 }
 

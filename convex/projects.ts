@@ -18,8 +18,32 @@ export const getProjects = query({
 
 		return await ctx.db
 			.query("projects")
-			.filter((q) => q.eq(q.field("user"), userRecord._id))
+			.withIndex("userId", (q) => q.eq("userId", userRecord._id))
 			.collect();
+	},
+});
+
+export const getProject = query({
+	args: {
+		projectId: v.id("projects"),
+	},
+	async handler(ctx, args) {
+		const identity = await ctx.auth.getUserIdentity();
+
+		if (!identity) {
+			throw new ConvexError("Not authenticated");
+		}
+		const userRecord = await userQuery(ctx, identity.subject);
+
+		if (userRecord === null) {
+			throw new ConvexError("User not found");
+		}
+
+		return await ctx.db
+			.query("projects")
+			.withIndex("userId", (q) => q.eq("userId", userRecord._id))
+			.filter((q) => q.eq(q.field("_id"), args.projectId))
+			.unique();
 	},
 });
 
@@ -45,7 +69,7 @@ export const createProject = mutation({
 			name: args.name,
 			description: args.description,
 			url: args.url,
-			user: userRecord._id,
+			userId: userRecord._id,
 		});
 
 		return projectId;
