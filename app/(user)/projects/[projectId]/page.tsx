@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { StarIcon } from "lucide-react";
+import Link from "next/link";
 
 type Props = {
 	params: {
@@ -39,13 +40,14 @@ function ProjectPage({ params: { projectId } }: Props) {
 	return (
 		<div>
 			<h1>Project Page - {project?.name}</h1>
+			<Link href={`/projects/${projectId}/instructions`}>Embed Code</Link>
 			<Table>
 				<TableHeader>
 					<TableRow>
 						<TableHead>Name</TableHead>
 						<TableHead>Email</TableHead>
 						<TableHead>Message</TableHead>
-						<TableHead>Created at</TableHead>
+						<TableHead>Created date</TableHead>
 						<TableHead className="text-right">Rating</TableHead>
 					</TableRow>
 				</TableHeader>

@@ -23,7 +23,7 @@ function InstructionsPage({ params: { projectId } }: Props) {
 					{`<script src="${process.env.NEXT_PUBLIC_WIDGET_URL}/widget.umd.js"></script>`}
 				</code>
 				<CopyButton
-					text={`<my-widget project="${projectId}"></my-widget>\n<script src="${process.env.NEXT_PUBLIC_WIDGET_URL}/widget.umd.js"></script>`}
+					text={`<my-widget project-id="${projectId}"></my-widget>\n<script src="${process.env.NEXT_PUBLIC_WIDGET_URL}/widget.umd.js"></script>`}
 				/>
 			</div>
 		</div>
