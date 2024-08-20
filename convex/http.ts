@@ -3,6 +3,7 @@ import { httpAction } from "./_generated/server";
 import { Webhook } from "svix";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { internal } from "./_generated/api";
+import { handleFeedback } from "./feedbacks";
 
 function ensureEnvironmentVariable(name: string): string {
 	const value = process.env[name];
@@ -60,14 +61,6 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
 	});
 });
 
-const http = httpRouter();
-
-http.route({
-	path: "/clerk",
-	method: "POST",
-	handler: handleClerkWebhook,
-});
-
 async function validateRequest(
 	req: Request
 ): Promise<WebhookEvent | undefined> {
@@ -92,5 +85,19 @@ async function validateRequest(
 		return;
 	}
 }
+
+const http = httpRouter();
+
+http.route({
+	path: "/clerk",
+	method: "POST",
+	handler: handleClerkWebhook,
+});
+
+http.route({
+	path: "/feedback",
+	method: "POST",
+	handler: handleFeedback,
+});
 
 export default http;
